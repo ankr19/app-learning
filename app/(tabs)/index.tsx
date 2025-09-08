@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -50,6 +50,11 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
+        <View className="flex-1 items-center justify-center bg-white">
+          <Text className="text-blue-300 text-xl">
+            Welcome to Nativewind!
+          </Text>
+        </View>
       </ThemedView>
     </ParallaxScrollView>
   );
