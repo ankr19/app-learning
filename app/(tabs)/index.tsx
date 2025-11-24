@@ -1,99 +1,134 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet, Text } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import React, { useState } from 'react';
+import { View, Text, StatusBar, TouchableOpacity } from 'react-native';
+import { TextInput, Button, IconButton, Avatar } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Text className='text-orange-500 text-lg'>Hi There</Text>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  // Custom Colors based on the image
+  const THEME_BLUE = '#9FB4D8'; 
+  const BG_GRAY = '#EBEBF0';
+
+  return (
+    <View className="flex-1" style={{ backgroundColor: BG_GRAY }}>
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+
+      {/* --- Top Blue Background Section --- */}
+      <View 
+        className="absolute top-0 w-full h-[45%]" 
+        style={{ backgroundColor: THEME_BLUE }} 
+      />
+
+      <SafeAreaView className="flex-1">
+        {/* --- Header: Back Button --- */}
+        <View className="px-2 pt-2">
+          <IconButton 
+            icon="chevron-left" 
+            iconColor="white" 
+            size={32} 
+            onPress={() => console.log('Back pressed')} 
+          />
+        </View>
+
+        {/* --- Main Content Container --- */}
+        <View className="flex-1 items-center justify-center -mt-12">
+          
+          {/* --- Avatar (Floating above card) --- */}
+          <View className="bg-white p-1 rounded-full mb-6 shadow-sm z-10">
+            <View className="bg-gray-200 rounded-full overflow-hidden">
+               {/* Using an icon as a placeholder for the silhouette */}
+               <Avatar.Icon 
+                 size={100} 
+                 icon="account" 
+                 color="white" 
+                 style={{ backgroundColor: THEME_BLUE }} 
+               />
+            </View>
+          </View>
+
+          {/* --- The Login Card --- */}
+          <View className="bg-white w-[85%] pt-10 pb-10 px-8 shadow-xl" style={{ borderRadius: 4 }}>
+            
+            {/* Title */}
+            <Text className="text-center text-2xl font-bold text-gray-800 mb-10 tracking-wider">
+              WELCOME
+            </Text>
+
+            {/* Email Input */}
+            <View className="mb-6">
+              <Text style={{ color: THEME_BLUE }} className="text-xs font-bold mb-1 ml-1 uppercase">
+                Email
+              </Text>
+              <TextInput
+                value={email}
+                onChangeText={setEmail}
+                mode="flat"
+                dense={true}
+                textColor="#333"
+                placeholder="emma.james4@mail.com"
+                placeholderTextColor="#9ca3af"
+                underlineColor="#E0E0E0"
+                activeUnderlineColor={THEME_BLUE}
+                style={{ backgroundColor: 'transparent', paddingHorizontal: 0, height: 30, fontSize: 14 }}
+                contentStyle={{ paddingLeft: 0 }}
+              />
+            </View>
+
+            {/* Password Input */}
+            <View className="mb-10">
+              <Text style={{ color: THEME_BLUE }} className="text-xs font-bold mb-1 ml-1 uppercase">
+                Password
+              </Text>
+              <TextInput
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={!showPassword}
+                mode="flat"
+                dense={true}
+                textColor="#333"
+                placeholder="**********"
+                placeholderTextColor="#9ca3af"
+                underlineColor="#E0E0E0"
+                activeUnderlineColor={THEME_BLUE}
+                style={{ backgroundColor: 'transparent', paddingHorizontal: 0, height: 30, fontSize: 14 }}
+                contentStyle={{ paddingLeft: 0 }}
+                // Optional: Eye icon toggle
+                right={
+                  <TextInput.Icon 
+                    icon={showPassword ? "eye-off" : "eye"} 
+                    size={18}
+                    color="#ccc"
+                    onPress={() => setShowPassword(!showPassword)} 
+                  />
+                }
+              />
+            </View>
+
+            {/* Login Button */}
+            <Button
+              mode="contained"
+              onPress={() => console.log('Login pressed')}
+              style={{ backgroundColor: THEME_BLUE, borderRadius: 2 }}
+              contentStyle={{ height: 48 }}
+              labelStyle={{ fontSize: 16, fontWeight: 'bold', letterSpacing: 1 }}
+            >
+              LOGIN
+            </Button>
+
+          </View>
+
+          {/* --- Footer Link --- */}
+          <TouchableOpacity className="mt-8">
+            <Text className="text-gray-500 text-sm font-medium">
+              Forgot password?
+            </Text>
+          </TouchableOpacity>
+
+        </View>
+      </SafeAreaView>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
