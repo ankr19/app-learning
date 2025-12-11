@@ -6,9 +6,15 @@ import Popup from '../components/confirmationscreen/popup-screen';
 import ConfirmationScreen from '@/components/confirmationscreen/confirm-screen';
 import LoadingScreen from '@/components/confirmationscreen/loading-screen';
 import { router } from 'expo-router';
+import { AudioModule, useAudioPlayer } from 'expo-audio';
 
 export default function HomeScreen2() {
+    const player = useAudioPlayer(require('../assets/beep.mp3'));
     const [showPopup, setShowPopup] = useState<boolean>(false);
+    const handlePlaying = ()=>{
+        player.seekTo(0);
+        player.play();
+    }
     return (
         <SafeAreaView className='bg-pink-50 flex-1 gap-3 '>
             {/* <Text>index</Text> */}
@@ -27,9 +33,11 @@ export default function HomeScreen2() {
                 onCancel={() => setShowPopup(false)}
             />
 
-            <Button mode='outlined' onPress={()=>{router.push('/login')}}>Login</Button>
+            <Button mode='outlined' onPress={() => { router.push('/login') }}>Login</Button>
             {/* <ConfirmationScreen message='Data is Correct.' /> */}
-                  {/* <LoadingScreen message='' /> */}
+            {/* <LoadingScreen message='' /> */}
+            {/* <LoadingScreen /> */}
+            <Button mode='outlined' onPress={()=>{handlePlaying()}}>Player</Button>
         </SafeAreaView>
     )
 }

@@ -24,14 +24,14 @@ export default function LoginScreen() {
 
       <SafeAreaView className="flex-1">
         {/* --- Header: Back Button --- */}
-        <View className="px-2 pt-2">
+        {/* <View className="px-2 pt-2">
           <IconButton 
             icon="chevron-left" 
             iconColor="white" 
             size={32} 
             onPress={() => console.log('Back pressed')} 
           />
-        </View>
+        </View> */}
 
         {/* --- Main Content Container --- */}
         <View className="flex-1 items-center justify-center -mt-12">
@@ -117,15 +117,14 @@ export default function LoginScreen() {
             >
               LOGIN
             </Button>
-
           </View>
 
           {/* --- Footer Link --- */}
-          <TouchableOpacity className="mt-8">
+          {/* <TouchableOpacity className="mt-8">
             <Text className="text-gray-500 text-sm font-medium">
               Forgot password?
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
         </View>
       </SafeAreaView>

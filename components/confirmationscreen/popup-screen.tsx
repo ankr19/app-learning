@@ -1,38 +1,46 @@
 import React, { useEffect } from "react";
-import { View, Pressable } from "react-native";
+import { Pressable } from "react-native";
 import Animated, {
   useSharedValue,
+  withSpring,
   withTiming,
   useAnimatedStyle,
 } from "react-native-reanimated";
 import { Card, Text, Button } from "react-native-paper";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-const AnimatedView = Animated.createAnimatedComponent(View);
+const AnimatedCard = Animated.createAnimatedComponent(Card);
 
 export default function Popup({
   visible,
-  title = "Are you sure?",
-  message = "Do you want to continue?",
+  title = "Confirmation",
+  message = "Do you want to proceed?",
+  icon = null,
+  confirmLabel = "Confirm",
+  cancelLabel = "Cancel",
   onConfirm,
   onCancel,
+  dismissOnBackdropPress = true,
 }) {
-  const scale = useSharedValue(0.5);
+  const scale = useSharedValue(0.8);
   const opacity = useSharedValue(0);
 
   useEffect(() => {
     if (visible) {
-      scale.value = withTiming(1, { duration: 200 });
-      opacity.value = withTiming(1, { duration: 150 });
+      opacity.value = withTiming(1, { duration: 200 });
+      scale.value = withSpring(1, { damping: 12 });
     } else {
-      scale.value = withTiming(0.5, { duration: 200 });
-      opacity.value = withTiming(0, { duration: 150 });
+      opacity.value = withTiming(0, { duration: 180 });
+      scale.value = withTiming(0.8, { duration: 180 });
     }
   }, [visible]);
 
-  const popupAnim = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
+  const backdropStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
+  }));
+
+  const popupStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
   }));
 
   if (!visible) return null;
@@ -40,27 +48,41 @@ export default function Popup({
   return (
     <AnimatedPressable
       className="absolute inset-0 bg-black/50 items-center justify-center"
-      style={popupAnim}
-      onPress={onCancel}
+      style={backdropStyle}
+      onPress={() => dismissOnBackdropPress && onCancel?.()}
     >
-      <AnimatedView
-        className="w-80"
+      <AnimatedCard
+        className="w-80 p-2 rounded-2xl"
+        style={popupStyle}
         onStartShouldSetResponder={() => true}
+        elevation={4}
       >
-        <Card>
-          <Card.Title title={title} />
-          <Card.Content>
-            <Text>{message}</Text>
-          </Card.Content>
+        {icon && (
+          <Card.Title
+            title={title}
+            left={() => icon}
+            titleStyle={{ fontSize: 18 }}
+          />
+        )}
 
-          <Card.Actions className="flex-row justify-end mt-2">
-            <Button onPress={onCancel}>Cancel</Button>
-            <Button mode="contained" onPress={onConfirm}>
-              Confirm
-            </Button>
-          </Card.Actions>
-        </Card>
-      </AnimatedView>
+        {!icon && <Card.Title title={title} titleStyle={{ fontSize: 18 }} />}
+
+        <Card.Content className="mt-1 mb-3">
+          <Text>{message}</Text>
+        </Card.Content>
+
+        <Card.Actions className="flex-row justify-end gap-2">
+          <Button onPress={onCancel}>{cancelLabel}</Button>
+          <Button
+            mode="contained"
+            onPress={onConfirm}
+            buttonColor="#2563eb"
+            textColor="#fff"
+          >
+            {confirmLabel}
+          </Button>
+        </Card.Actions>
+      </AnimatedCard>
     </AnimatedPressable>
   );
 }
