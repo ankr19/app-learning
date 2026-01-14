@@ -64,6 +64,8 @@ export default function HomeScreen2() {
             <Button mode='outlined' onPress={() => { handlePlaying() }}>Player</Button>
             <Button mode="contained" onPress={() => { setpopup(true) }}>Pop Up Confirmation</Button>
             <Button mode="contained" onPress={() => { router.push('/confirm-screen') }}>Confirmation Screen</Button>
+            <Button mode="contained" onPress={() => { router.push('/productview') }}>Product Screen</Button>
+
             </View>
         </SafeAreaView>
     )

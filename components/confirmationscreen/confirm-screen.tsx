@@ -29,7 +29,7 @@ export default function ConfirmationScreen({
                         <Text style={styles.message}>{message ?? 'Loading...'}</Text>
                     ) : (
                         <LottieView
-                            source={require('../..//assets/confirmation.json')}
+                            source={require('../../assets/confirmation.json')}
                             autoPlay
                             loop={loop}
                             speed={speed}
