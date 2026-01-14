@@ -108,18 +108,20 @@ export default function LoginScreen() {
             </View>
 
             {/* Login Button */}
+            <View className='flex gap-3'>
             <Button
               mode="contained"
               onPress={() => console.log('Login pressed')}
               style={{ backgroundColor: THEME_BLUE, borderRadius: 2 }}
               contentStyle={{ height: 48 }}
               labelStyle={{ fontSize: 16, fontWeight: 'bold', letterSpacing: 1 }}
-            >
+              >
               LOGIN
             </Button>
             <Button mode='contained' onPress={() => console.log('Sign up pressed')} style={{ backgroundColor: 'transparent', borderRadius: 2, borderWidth: 1, borderColor: THEME_BLUE }} contentStyle={{ height: 48 }} labelStyle={{ fontSize: 16, fontWeight: 'bold', letterSpacing: 1, color: THEME_BLUE }}>
               SIGN UP
             </Button>
+              </View>
           </View>
 
           {/* --- Footer Link --- */}

@@ -63,6 +63,7 @@ export default function HomeScreen2() {
             <Button mode='outlined' onPress={() => { router.push('/hapticcheck') }}>Move to Heptic Check</Button>
             <Button mode='outlined' onPress={() => { handlePlaying() }}>Player</Button>
             <Button mode="contained" onPress={() => { setpopup(true) }}>Pop Up Confirmation</Button>
+            <Button mode="contained" onPress={() => { router.push('/confirm-screen') }}>Confirmation Screen</Button>
             </View>
         </SafeAreaView>
     )
